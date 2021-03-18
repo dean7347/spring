@@ -71,7 +71,7 @@ public class UserRepositoryTest extends StudyApplicationTests {
         user.ifPresent(selectUser->{
             userRepository.delete(selectUser);
 
-        });
+        }); 
         Optional<User> deluser = userRepository.findById(3L);
 
         assertFalse(deluser.isPresent());
