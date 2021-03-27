@@ -1,5 +1,10 @@
 package com.example.study.model.entity;
-import lombok.*;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -9,27 +14,26 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
-
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
-@ToString(exclude = {"orderGroup"})
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @Accessors(chain = true)
-public class User {
-
+public class AdminUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String account;
-    private  String password;
+    private String password;
     private String status;
-    private String email;
-    private String phoneNumber;
+    private String role;
+    private LocalDateTime lastLoginAt;
+
+    private LocalDateTime passwordUpdatedAt;
+    private int loginFailCount;
     private LocalDateTime registeredAt;
     private LocalDateTime unregisteredAt;
     @CreatedDate
@@ -40,11 +44,4 @@ public class User {
     private String createdBy;
     @LastModifiedBy
     private String updatedBy;
-
-    //User 1:N orderGroup
-    //조인건 변수에대해선 exclude
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-    private List<OrderGroup> orderGroupList;
-
-
 }

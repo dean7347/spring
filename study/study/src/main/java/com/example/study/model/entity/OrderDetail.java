@@ -1,4 +1,6 @@
 package com.example.study.model.entity;
+
+
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
@@ -8,30 +10,26 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
-
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@ToString(exclude = {"orderGroup"})
+@AllArgsConstructor
+@Entity //order_detail
+@ToString(exclude = {"orderGroup","item"})
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @Accessors(chain = true)
-public class User {
+public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String account;
-    private  String password;
     private String status;
-    private String email;
-    private String phoneNumber;
-    private LocalDateTime registeredAt;
-    private LocalDateTime unregisteredAt;
+    private LocalDateTime arrivalDate;
+    private Integer quantity;
+    private BigDecimal totalPrice;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -41,10 +39,15 @@ public class User {
     @LastModifiedBy
     private String updatedBy;
 
-    //User 1:N orderGroup
-    //조인건 변수에대해선 exclude
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-    private List<OrderGroup> orderGroupList;
 
+    //orderDetail N: 1 item
+    @ManyToOne
+    private Item item;
+
+
+    //orderDetail N : 1 orderGroup
+    //private Long orderGroupId;
+    @ManyToOne
+    private OrderGroup orderGroup;
 
 }
