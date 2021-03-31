@@ -18,7 +18,7 @@ public class OrderGroupRepositoryTest extends StudyApplicationTests {
     public void create(){
         OrderGroup orderGroup = new OrderGroup();
         orderGroup.setStatus("COMPLUETE");
-        orderGroup.setOrderType("ALL");
+        //orderGroup.setOrderType("ALL");
         orderGroup.setRevAddress("SEOUL");
         orderGroup.setRevName("HONG");
         orderGroup.setPaymentType("CARD");
