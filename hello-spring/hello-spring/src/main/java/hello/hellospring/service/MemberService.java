@@ -3,12 +3,17 @@ package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Transactional
 public class MemberService {
 
+    @Autowired
     private final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
@@ -23,9 +28,10 @@ public class MemberService {
         //Optional<Member> result =
         //이것을 메소드로 뺄려면
         //커맨드 알트 m
+        System.out.println("메서드 실행");
         validateDuplicateMember(member);
         memberRepository.save(member);
-        return  member.getId();
+        return member.getId();
     }
 
     private void validateDuplicateMember(Member member) {
