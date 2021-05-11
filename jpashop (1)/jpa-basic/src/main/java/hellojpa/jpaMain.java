@@ -20,28 +20,27 @@ public class jpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
         try {
+            //저장
 
 
 
-            Member member = em.find(Member.class, 150L);
-            member.setName("ZZZZ");
 
-            //JPA에서 관리하지 않게되므로 트랙젝션시 아무일도 안일어남남
-            //특정 엔티티만 중영속 상태로 전환
-           em.detach(member);
+            Team team = new Team();
+            team.setName("TeamA");
+            //team.getMembers().add(member);
+            em.persist(team);
 
-
-           //영속성 컨텐츠 초기화
-            //완전 초기화됐기따문에 다시 조회하면 셀렉트 쿼리가 다시나감(캐싱 x  1차캐시를 다지움)
-           em.clear();
-
-           //영속성 컨텍스트 종료
-           em.close();
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
+            em.persist(member);
 
 
-            //쿼리가 나가는 시점
+            em.flush();
+            em.clear();
+
+
             tx.commit();
-
 
         } catch (Exception e) {
             tx.rollback();
