@@ -56,6 +56,7 @@ public class MemberApiController {
         return new CreateMemberResponse(id);
     }
 
+
     @PostMapping("/api/v2/members")
     public CreateMemberResponse saveMemberV2(@RequestBody @Valid CreateMemberRequest request) {
         Member member = new Member();
